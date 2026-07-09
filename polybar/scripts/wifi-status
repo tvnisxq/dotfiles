@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+ssid=$(nmcli -t -f active,ssid dev wifi | awk -F: '$1=="yes"{print $2; exit}')
+icon_color="#e0719b"   # blue, matches ${colors.blue}
+text_color="#eeeeec"   # foreground
+
+if [ -n "$ssid" ]; then
+    echo "%{F$icon_color}󰤨%{F-} %{F$text_color}$ssid%{F-}"
+else
+    echo "%{F$icon_color}󰤭%{F-} %{F$text_color}Offline%{F-}"
+fi
