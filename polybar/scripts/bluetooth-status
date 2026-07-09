@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Icons (Nerd Font)
+ICON_CONNECTED="󰂰 "
+ICON_ON="󰂯 "       # bluetooth, connected
+ICON_OFF="󰂲 "       # bluetooth, powered off (slashed)
+
+
+COLOR_CONNECTED="#a6e3a1"   # green — active connection
+COLOR_ON="#89b4fa"          # blue — powered, idle
+COLOR_OFF="#6b7089"         # grey — disabled
+
+if bluetoothctl show | grep -q "Powered: yes"; then
+    device=$(bluetoothctl info | grep "Alias" | cut -d' ' -f2-)
+    if [ -n "$device" ]; then
+        echo "%{F$COLOR_CONNECTED}$ICON_CONNECTED $device%{F-}"
+    else
+        echo "%{F$COLOR_ON}$ICON_ON On%{F-}"
+    fi
+else
+    echo "%{F$COLOR_OFF}$ICON_OFF Off%{F-}"
+fi
