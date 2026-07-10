@@ -1,0 +1,31 @@
+#!/bin/sh
+
+echo "$(date) : bspwmrc executed" >> /tmp/bspwmrc.log
+
+# Hotkey daemon
+pgrep -x sxhkd >/dev/null || sxhkd &
+
+# Compositor
+pgrep -x picom >/dev/null || \
+picom --config ~/.config/picom/picom.conf -b
+
+# Monitor layout
+xrandr \
+  --output HDMI-0 --primary --mode 2560x1440 --rate 120 --pos 0x0 \
+  --output DP-2 --mode 1920x1080 --rate 300 --pos 2560x0
+
+# Restore last wallpaper + Pywal colors
+wal -R 
+
+# Workspaces
+bspc monitor HDMI-0 -d 1 2 3 4 5 6 7
+bspc monitor DP-2 -d 5
+
+# Status bar
+~/.config/polybar/launch.sh &
+
+# Bypass fullscreen
+~/.config/polybar/scripts/fs-watch.sh &
+
+# Start a terminal only if none exists
+pgrep -x kitty >/dev/null || kitty &
