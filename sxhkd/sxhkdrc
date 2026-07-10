@@ -1,0 +1,66 @@
+super + Return
+    kitty
+
+super + c
+    cool-retro-term
+
+super + shift + q
+    bspc node -c
+
+super + {1-9}
+    bspc desktop -f '^{1-9}'
+
+ctrl + alt + w
+    ~/.local/bin/wallpaper-picker
+
+super + a
+    rofi -show drun
+
+super + {h,j,k,l}
+    bspc node -f {west,south,north,east}
+
+super + shift + {h,j,k,l}
+    bspc node -s {west,south,north,east}
+
+super + alt + {h,j,k,l}
+    bspc node -z {left -40 0,bottom 0 40,top 0 -40,right 40 0}
+
+super + f
+    bspc node -t fullscreen
+
+super + shift + space
+    bspc node -t floating
+
+super + p
+    bspc node -t pseudo_tiled
+
+super + m
+    bspc node -d '^5'
+
+super + shift + m
+    bspc desktop -f '^5'
+
+super + shift + Left
+    bspc node -m HDMI-0
+
+super + shift + Right
+    bspc node -m DP-2
+
+# Send focused window to desktop
+super + shift + {1-9}
+    bspc node -d '^{1-9}'
+
+super + e
+    nemo ~
+
+# Screenshot (GUI)
+super + shift + s
+    flameshot gui
+
+# Full screen
+Print
+    flameshot full
+
+# Full screen to clipboard
+super + Print
+    flameshot full --clipboard
