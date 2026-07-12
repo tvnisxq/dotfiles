@@ -1,0 +1,99 @@
+@import "/home/tvnisxq/.cache/wal/colors-rofi-dark.rasi"
+* {
+    font: "JetBrainsMono Nerd Font 13";
+    g-spacing: 10px;
+    g-margin: 0;
+    b-radius: 8px;
+    g-padding: 8px;
+    w-border: 2px solid;
+    w-padding: 12px;
+    b-color:         @background;
+    fg-color:        @foreground;
+    fgp-color:       #888888;
+    hl-color:        @active-background;
+    hlt-color:       @foreground;
+    alt-color:       @background;
+    wbg-color:       @background;
+    w-border-color:  @active-background;
+}
+configuration {
+    show-icons: true;
+}
+listview {
+    columns: 4;
+    lines: 2;
+    spacing: 14px;
+    fixed-height: true;
+    fixed-columns: true;
+    cycle: false;
+    scrollbar: false;
+    border: 0px solid;
+}
+window {
+    transparency: "real";
+    width: 70%;
+    border-radius: @b-radius;
+    background-color: rgba(20, 20, 30, 0.15);
+    border: 0px solid;
+    padding: @w-padding;
+}
+prompt {
+    text-color: @fg-color;
+}
+inputbar {
+    children: ["prompt", "entry"];
+    spacing: @g-spacing;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: @b-radius;
+    padding: 6px 10px;
+}
+entry {
+    placeholder: "Search Wallpaper";
+    text-color: @fg-color;
+    placeholder-color: @fgp-color;
+}
+mainbox {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: @g-padding;
+    children: ["inputbar", "listview", "message"];
+}
+element {
+    orientation: vertical;
+    spacing: 6px;
+    margin: @g-margin;
+    padding: @g-padding;
+    border: 0px solid;
+    border-radius: @b-radius;
+    border-color: @b-color;
+    background-color: rgba(255, 255, 255, 0.02);
+    text-color: @fg-color;
+}
+element-icon {
+    size: 200px;
+    border-radius: @b-radius;
+}
+element-text {
+    horizontal-align: 0.5;
+    text-color: @fg-color;
+}
+element normal.normal {
+    background-color: transparent;
+    text-color: @fg-color;
+}
+element alternate.normal {
+    background-color: rgba(255, 255, 255, 0.01);
+    text-color: @fg-color;
+}
+element selected.active {
+    background-color: @hl-color;
+    text-color: @hlt-color;
+}
+element selected.normal {
+    background-color: rgba(137, 180, 250, 0.2); /* semi-transparent highlight */
+    text-color: @hlt-color;
+}
+message {
+    background-color: red;
+    border: 0px solid;
+}
