@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+TOGGLE_LABEL=" Toggle Power"
+SCAN_LABEL=" Scan (10s)"
+
+toggle_power() {
+    if bluetoothctl show | grep -q "Powered: yes"; then
+        bluetoothctl power off
+    else
+        bluetoothctl power on
+    fi
+}
+
+list_devices() {
+    bluetoothctl devices | while read -r _ mac name; do
+        if bluetoothctl info "$mac" | grep -q "Connected: yes"; then
+            echo " $name"
+        else
+            echo " $name"
+        fi
+    done
+}
+
+main_menu() {
+    options="$TOGGLE_LABEL\n$SCAN_LABEL\n$(list_devices)"
+    chosen=$(echo -e "$options" | rofi -dmenu -i -p "Bluetooth" -theme ~/.config/rofi/themes/glass.rasi)
+    case "$chosen" in
+        "$TOGGLE_LABEL")
+            toggle_power
+            main_menu
+            ;;
+        "$SCAN_LABEL")
+            if ! bluetoothctl show | grep -q "Powered: yes"; then
+                bluetoothctl power on
+                sleep 1
+            fi
+            bluetoothctl --timeout 10 scan on
+            main_menu
+            ;;
+        "")
+            exit 0
+            ;;
+        *)
+            name=$(echo "$chosen" | cut -c3-)
+            mac=$(bluetoothctl devices | grep -F "$name" | awk '{print $2}')
+            if bluetoothctl info "$mac" | grep -q "Connected: yes"; then
+                bluetoothctl disconnect "$mac"
+                main_menu
+            else
+                bluetoothctl connect "$mac"
+                if bluetoothctl info "$mac" | grep -q "Connected: yes"; then
+                    notify-send "Bluetooth" "Connected to $name"
+                    exit 0
+                else
+                    notify-send "Bluetooth" "Failed to connect to $name"
+                    main_menu
+                fi
+            fi
+            ;;
+    esac
+}
+
+main_menu
