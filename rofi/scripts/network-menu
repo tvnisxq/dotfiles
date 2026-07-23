@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+wifi_enabled=$(nmcli radio wifi)
+
+if [ "$wifi_enabled" = "enabled" ]; then
+    toggle="󰖪 Disable Wi-Fi"
+else
+    toggle="󰖩 Enable Wi-Fi"
+fi
+
+networks=$(
+nmcli -t -f IN-USE,SSID dev wifi list | while IFS=: read -r active ssid; do
+    [ -z "$ssid" ] && continue
+
+    if [ "$active" = "*" ]; then
+        printf "✓ 󰤨 %s\n" "$ssid"
+    else
+        printf "󰤨 %s\n" "$ssid"
+    fi
+done
+)
+
+chosen=$(
+    printf "%s\n%s" "$toggle" "$networks" | \
+    rofi \
+        -theme ~/.config/rofi/themes/glass.rasi \
+        -dmenu \
+        -i \
+        -p "Wi-Fi"
+)
+
+case "$chosen" in
+    "󰖪 Disable Wi-Fi")
+        nmcli radio wifi off
+        exit
+        ;;
+    "󰖩 Enable Wi-Fi")
+        nmcli radio wifi on
+        exit
+        ;;
+esac
+
+ssid=$(echo "$chosen" | sed 's/^✓ //' | sed 's/^󰤨 //' | sed 's/^󰤨 //')
+
+[ -z "$ssid" ] && exit
+
+nmcli dev wifi connect "$ssid"
