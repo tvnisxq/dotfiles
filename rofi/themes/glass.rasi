@@ -1,0 +1,106 @@
+@import "/home/tvnisxq/.cache/wal/colors-rofi-dark.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font 13";
+    g-spacing: 10px;
+    g-margin: 0;
+    b-radius: 10px;
+    g-padding: 8px;
+    w-padding: 14px;
+
+    b-color:         @background;
+    fg-color:        @foreground;
+    fgp-color:       #888888;
+    hl-color:        @active-background;
+    hlt-color:       @foreground;
+    alt-color:       @background;
+    wbg-color:       @background;
+    w-border-color:  @active-background;
+}
+
+configuration {
+    show-icons: false;
+}
+
+window {
+    transparency: "real";
+    width: 22%;
+    border-radius: @b-radius;
+    background-color: rgba(20, 20, 30, 0.15);
+    border: 0px solid;
+    padding: @w-padding;
+}
+
+prompt {
+    text-color: @fg-color;
+}
+
+inputbar {
+    children: ["prompt", "entry"];
+    spacing: @g-spacing;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: @b-radius;
+    padding: 8px 10px;
+}
+
+entry {
+    placeholder: "Search";
+    text-color: @fg-color;
+    placeholder-color: @fgp-color;
+}
+
+listview {
+    columns: 1;
+    lines: 6;
+    spacing: 6px;
+    fixed-height: false;
+    cycle: true;
+    scrollbar: false;
+    border: 0px solid;
+}
+
+mainbox {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: @g-padding;
+    children: ["inputbar", "listview"];
+}
+
+element {
+    orientation: horizontal;
+    spacing: 8px;
+    margin: @g-margin;
+    padding: 8px 10px;
+    border: 0px solid;
+    border-radius: @b-radius;
+    background-color: rgba(255, 255, 255, 0.02);
+    text-color: @fg-color;
+}
+
+element-text {
+    horizontal-align: 0.0;
+    text-color: inherit;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @fg-color;
+}
+
+element alternate.normal {
+    background-color: rgba(255, 255, 255, 0.01);
+    text-color: @fg-color;
+}
+
+element selected.active,
+element selected.normal {
+    background-color: rgba(137, 180, 250, 0.2);
+    text-color: @hlt-color;
+}
+
+message {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: @b-radius;
+    text-color: @fg-color;
+    padding: 6px 10px;
+}
